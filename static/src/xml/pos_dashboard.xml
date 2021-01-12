@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="PosDashboard">
+        <div class="oh_dashboards">
+            <div class="container-fluid o_pos_dashboard">
+            </div>
+        </div>
+    </t>
+   <t t-name="PosChart_Dashboard">  
+    <div class="card-header" style="background-color:white;">
+        <div>
+            <b>
+                <h3 style="float:left;margin-top:3px;">Dashboard POS</h3>
+            </b>
+        </div> 
+        <div style="text-align:right;">
+            <select id="select_pos" class="o_select_pos o_dropdown_toggler_btn btn btn-secondary dropdown-toggle" style="width:auto;">
+                <option value="">Semua POS</option>
+            </select>  
+                <input id="date_start" type="date" placeholder="dd/mm/yyyy" data-date-format='dd/mm/yyyy'  class="o_select_pos o_dropdown_toggler_btn btn btn-secondary dropdown-toggle"/> 
+                <b>-</b>
+                <input id="date_end" type="date" placeholder="dd/mm/yyyy" class="o_select_pos o_dropdown_toggler_btn btn btn-secondary dropdown-toggle"/>
+                <button class="btn btn-primary" id="button_action">Proses</button> 
+        </div>
+    </div>
+    <div class="main-section">
+        <div class="dashbord">
+            <div class="icon-section"> 
+                <i aria-label="Messages" class="fa fa-money" role="img"></i>
+                <h5>Return Order</h5>
+                <p class="o_pos_order"/>
+            </div>
+            <div class="detail-section">
+                <a href="point_of_sale/today_order/filter?today=" id="pos_total_order" target="_blank">More Info </a>
+            </div>
+        </div>
+        <div class="dashbord dashbord-green">
+            <div class="icon-section"> 
+                <i aria-label="Messages" class="fa fa-copy" role="img"></i>
+                <h5>Order</h5>
+                <p class="o_today_order"/>
+            </div>
+            <div class="detail-section">
+                <a href="point_of_sale/data/filter?data=" id="pos_today_order" target="_blank">More Info </a>
+            </div>
+        </div>
+        <div class="dashbord dashbord-orange">
+            <div class="icon-section"> 
+                <i aria-label="Messages" class="fa fa-list" role="img"></i>
+                <h5>Active Session</h5>
+                <p class="o_pos_session"/>
+            </div>
+            <div class="detail-section">
+                <a href="point_of_sale/Sessions/filter?active=" id="pos_active_pos" target="_blank">More Info </a>
+            </div>
+        </div> 
+        <div class="dashbord dashbord-blue">
+            <div class="icon-section"> 
+                <i aria-label="Messages" class="fa fa-users" role="img"></i>
+                <h5>Product Sold</h5>
+                <p class="o_get_order_today"/>
+            </div>
+            <div class="detail-section">
+                <a href="point_of_sale/product/filter?product=" id="pos_today_product" target="_blank">More Info </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 mt-4">
+            <div class="row" style="margin:0px;">
+                <div class="col-md-8" id="col-graph">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <b>
+                                    <h3 class="custom-h3" style="float:left;">Pos Orders</h3>
+                                </b>
+                                <div class="box-buttonn4">
+                                    <button id="sales_orders" value="pos_hourly_sales">Hourly</button>
+                                    <button id="sales_orders" value="pos_dayly_sales">Daily</button>
+                                    <button id="sales_orders" value="pos_monthly_sales" class="active_button">Montly</button>
+                                    <button id="sales_orders" value="pos_year_sales">Yearly</button>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="card-body" id="in_ex_body_hide" style="padding-top: 0px;">
+                             <div class="row">
+                                <div class="col-12"> 
+                                    <div class="chart">
+                                      <canvas id="canvas_1" width="200" height="90"></canvas>
+                                   </div>
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4" id="col-graph">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <b>
+                                    <h3 class="custom-h3" style="float:left;">Top 5 Customers</h3>
+                                </b>
+                                <div class="box-buttonn3">
+                                    <button id="pos_orders_customer" value="pos_dayly_customer">Today</button>
+                                    <button id="pos_orders_customer" value="pos_monthly_customer" class="active_button">Month</button>
+                                    <button id="pos_orders_customer" value="pos_year_customer">Year</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" id="in_ex_body_hide">
+                            <div class="row">
+                                <div class="col-12"> 
+                                    <div class="chart">
+                                        <table class="table table-striped">
+                                          <thead>
+                                            <tr>
+                                              <th>No. </th>
+                                              <th style="width:300px">Name</th>
+                                              <th>Orders</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            <thead class="o_sale_by_salesman"> 
+                                            </thead>
+                                          </tbody>
+                                        </table> 
+                                    </div>
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<script>
+
+    $(document).ready(function(){
+          $('.box-buttonn3').on('click', 'button', function() { 
+            $(this).addClass('active_button').siblings().removeClass('active_button');
+        });
+          $('.box-buttonn4').on('click', 'button', function() { 
+            $(this).addClass('active_button').siblings().removeClass('active_button');
+        });
+    });
+</script>
+            <br></br> 
+            <div class="row" style="margin:0px;">
+
+                 <div class="col-md-5" id="col-graph">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <b>
+                                    <h3 class="custom-h3" style="float:left;">TOP 10 Items Product</h3>
+                                </b>
+                                 <div class="box-buttonn3">
+                                    <button id="pos_product" value="pos_dayly_product">Today</button>
+                                    <button id="pos_product" value="pos_monthly_product" class="active_button">Month</button>
+                                    <button id="pos_product" value="pos_year_product">Year</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" id="in_ex_body_hide">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="chart">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>No.</th>
+                                                    <th>Product</th>
+                                                    <th>Product Sold</th>
+                                                    <th>Panjualan</th>
+                                                </tr>
+                                            </thead>
+                                            <thead class="o_data_top_product">
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                             </div>
+                        </div>`
+                    </div>
+                </div>
+
+                  <div class="col-md-7" id="col-graph">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <b>
+                                    <h3 class="custom-h3" style="float:left;">TOP 10 Category Product</h3>
+                                </b>
+                                 <div class="box-buttonn3">
+                                    <button id="pos_categ_product" value="pos_dayly_categ_product">Today</button>
+                                    <button id="pos_categ_product" value="pos_monthly_categ_product" class="active_button">Month</button>
+                                    <button id="pos_categ_product" value="pos_year_categ_product">Year</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" id="in_ex_body_hide" style="padding-top: 0px;">
+                             <div class="row">
+                                <div class="col-12"> 
+                                    <div class="chart">
+                                      <canvas id="canvas_2" width="200" height="90"></canvas>
+                                   </div>
+                                </div>
+                             </div>
+                        </div>
+                        <!-- <div class="card-body" id="in_ex_body_hide">
+                            <div class="row">
+                                <div class="col-12"> 
+                                    <div class="chart">
+                                        <table class="table table-striped">
+                                          <thead>
+                                            <tr>
+                                              <th>No.</th>
+                                              <th>Product Category</th>
+                                              <th>Product Sold</th> 
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            <thead class="o_data_top_customer">
+                                            </thead>
+                                          </tbody>
+                                        </table> 
+                                    </div>
+                                </div>
+                             </div>
+                        </div> -->
+                    </div>
+                </div>                
+            </div>
+            <br></br> 
+            <div class="row" style="margin:0px;">
+
+                <div class="col-md-12" id="col-graph">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <b>
+                                    <h3 class="custom-h3" style="float:left;">Chart Pos</h3>
+                                </b>
+                                 <div class="box-buttonn3">
+                                    <button id="pos_orders" value="pos_dayly_sales">Today</button>
+                                    <button id="pos_orders" value="pos_monthly_sales" class="active_button">Month</button>
+                                    <button id="pos_orders" value="pos_year_sales">Year</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" id="in_ex_body_hide" style="padding-top: 0px;">
+                             <div class="row">
+                                <div class="col-12"> 
+                                    <div class="chart">
+                                      <canvas id="canvas_3" width="200" height="90"></canvas>
+                                   </div>
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                
+            </div>
+
+        </div> 
+    </t>
+</templates>
